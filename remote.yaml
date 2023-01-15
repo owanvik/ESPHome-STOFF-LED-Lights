@@ -1,0 +1,57 @@
+web_server:
+    port: 80
+
+esphome:
+  name: irblaster_stue
+
+esp32:
+  board: nodemcu-32s
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  password: ""
+
+wifi:
+  ssid: "Bronet"
+  password: "utsikten"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Irblaster Stue Fallback Hotspot"
+    password: "3OUKCKuv1n4M"
+
+captive_portal:
+
+remote_receiver:
+  pin:
+    number: GPIO16
+    inverted: True
+  dump: all
+
+remote_transmitter:
+  pin: GPIO17
+  carrier_duty_percent: 50%
+
+switch:
+  - platform: template
+    name: LED Candles
+    optimistic: True
+    turn_on_action:
+      - remote_transmitter.transmit_lg:
+          data: 0x807F00FF
+          nbits: 32
+      - remote_transmitter.transmit_nec:
+          address: 0xFE01
+          command: 0xFF00
+    turn_off_action:
+      - remote_transmitter.transmit_lg:
+          data: 0x807F40BF
+          nbits: 32
