@@ -20,8 +20,8 @@ ota:
   password: ""
 
 wifi:
-  ssid: "Bronet"
-  password: "utsikten"
+  ssid: "<SSID>"
+  password: "<password>"
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
